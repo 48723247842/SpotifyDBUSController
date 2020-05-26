@@ -2,7 +2,7 @@
 
 GITHUB_USER_NAME="mediabox"
 GITHUB_USER_EMAIL="mediabox@mediabox.com"
-GITHUB_SSH_REPOSITORY_URL="http://192.168.1.100:3000/mediabox/SpotifyDBUSController.git"
+GITHUB_SSH_REPOSITORY_URL="http://192.168.1.105:3000/mediabox/SpotifyDBUSController.git"
 
 function is_int() { return $(test "$@" -eq "$@" > /dev/null 2>&1); }
 ssh-add -D
@@ -27,4 +27,4 @@ git add .
 git commit -m "$NextCommitNumber"
 git remote add gogs $GITHUB_SSH_REPOSITORY_URL
 git push gogs master
-git push http://mediabox:lamorsa@192.168.1.100:3000/mediabox/SpotifyDBUSController.git --all
+git push http://mediabox:lamorsa@192.168.1.105:3000/mediabox/SpotifyDBUSController.git --all
