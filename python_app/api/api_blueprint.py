@@ -25,17 +25,17 @@ api_blueprint = Blueprint( 'api_blueprint' , url_prefix='/api' )
 def commands_root( request ):
 	return response.text( "you are at the /api url\n" )
 
-@api_blueprint.route( "/reopen-spotify" , methods=[ "GET" ] )
-def next( request ):
-	result = { "message": "failed" , "status": None , "metadata": None }
-	try:
+# @api_blueprint.route( "/reopen-spotify" , methods=[ "GET" ] )
+# def next( request ):
+# 	result = { "message": "failed" , "status": None , "metadata": None }
+# 	try:
 
-		time.sleep( .5 )
-		result["message"] = "success"
-	except Exception as e:
-		print( e )
-		result["error"] = str( e )
-	return json( result )
+# 		time.sleep( .5 )
+# 		result["message"] = "success"
+# 	except Exception as e:
+# 		print( e )
+# 		result["error"] = str( e )
+# 	return json( result )
 
 
 @api_blueprint.route( "/next" , methods=[ "GET" ] )
