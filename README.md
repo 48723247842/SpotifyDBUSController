@@ -11,18 +11,9 @@ redis-cli -n 1 set "CONFIG.SPOTIFY_DBUS_CONTROLLER_SERVER" "{\"port\": 11101}"
 1. For virtualenv , need `sudo apt-get install python-dbus`
 2. also `sudo apt-get install python3-virtualenv`
 3. `python3 -m venv --system-site-packages venv`
-
-
-## Docker Build Command
-
-```
-sudo docker build -t spotify-dbus-controller .
-```
-
-## Docker Run Command
-```
-sudo docker run -dit --restart='always' \
---name 'spotify-dbus-controller' \
---network host \
-spotify-dbus-controller
-```
+4. I can't get Docker to Talk to Host dbus socket. Its mounted, but idk
+5. So apparently you can use pm2 now to run python apps even inside a virtualenv. wadu
+6. `source venv/bin/activate`
+7. `pm2 start server.py --name PythonDBUS`
+8. `pm2 startup`
+9. `pm2 save`
