@@ -25,6 +25,6 @@ fi
 #echo "$NextCommitNumber"
 git add .
 git commit -m "$NextCommitNumber"
-git remote add gogs $GITHUB_SSH_REPOSITORY_URL
+#git remote add gogs $GITHUB_SSH_REPOSITORY_URL
 git push gogs master
 git push http://mediabox:lamorsa@192.168.1.105:3000/mediabox/SpotifyDBUSController.git --all
