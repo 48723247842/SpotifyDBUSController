@@ -1,8 +1,9 @@
 #!/bin/bash
 
-GITHUB_USER_NAME="mediabox"
-GITHUB_USER_EMAIL="mediabox@mediabox.com"
-GITHUB_SSH_REPOSITORY_URL="http://192.168.1.105:3000/mediabox/SpotifyDBUSController.git"
+GITHUB_USER_NAME="48723247842"
+GITHUB_USER_EMAIL="48723247842@protonmail.com"
+GITHUB_PRIVATE_KEY_PATH="/home/morphs/.ssh/48723247842_github"
+GITHUB_SSH_REPOSITORY_URL="git@github.com:48723247842/SpotifyDBUSController.git"
 
 function is_int() { return $(test "$@" -eq "$@" > /dev/null 2>&1); }
 ssh-add -D
@@ -25,6 +26,5 @@ fi
 #echo "$NextCommitNumber"
 git add .
 git commit -m "$NextCommitNumber"
-#git remote add gogs $GITHUB_SSH_REPOSITORY_URL
-#git push gogs master
-git push http://mediabox:lamorsa@192.168.1.105:3000/mediabox/SpotifyDBUSController.git --all
+git remote add origin $GITHUB_SSH_REPOSITORY_URL
+git push origin master
