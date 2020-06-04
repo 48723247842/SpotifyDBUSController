@@ -83,6 +83,21 @@ def pause( request ):
 		result["error"] = str( e )
 	return json( result )
 
+@api_blueprint.route( "/resume" , methods=[ "GET" ] )
+def resume( request ):
+	result = { "message": "failed" , "status": None , "metadata": None }
+	try:
+		spotify_dbus_controller = SpotifyDBusController()
+		spotify_dbus_controller.play()
+		time.sleep( .5 )
+		result["message"] = "success"
+		result["status"] = spotify_dbus_controller.get_playback_status()
+		result["metadata"] = spotify_dbus_controller.get_metadata()
+	except Exception as e:
+		print( e )
+		result["error"] = str( e )
+	return json( result )
+
 @api_blueprint.route( "/play-pause" , methods=[ "GET" ] )
 def play_pause( request ):
 	result = { "message": "failed" , "status": None , "metadata": None }

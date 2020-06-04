@@ -131,7 +131,8 @@ class SpotifyDBusController:
 
 if __name__ == '__main__':
 	spotify_dbus_controller = SpotifyDBusController()
-	spotify_dbus_controller.next()
+	spotify_dbus_controller.play()
+	print( spotify_dbus_controller.get_playback_status() )
 	'''
 	spotify_dbus_controller.stop()
 	#spotify_dbus_controller.open_uri( "spotify:playlist:7efbTF6iXgx6AGdGnM7nCU" )
