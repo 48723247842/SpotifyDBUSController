@@ -1,11 +1,5 @@
 # Spotify DBUS Controller Server
 
-## Necessary Config
-
-```
-redis-cli -n 1 set "CONFIG.SPOTIFY_DBUS_CONTROLLER_SERVER" "{\"port\": 11101}"
-```
-
 ## Notes
 
 1. For virtualenv , need `sudo apt-get install python-dbus`

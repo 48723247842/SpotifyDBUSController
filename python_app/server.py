@@ -38,6 +38,7 @@ def redis_connect():
 	except Exception as e:
 		return False
 
+
 def get_config( redis_connection ):
 	try:
 		try:
@@ -45,13 +46,20 @@ def get_config( redis_connection ):
 			config = json.loads( config )
 			return config
 		except Exception as e:
-			config_path = os.path.join( os.path.dirname( os.path.abspath( __file__ ) ) , "config.json" )
-			with open( config_path ) as f:
-				config = json.load( f )
-			redis_connection.set( "CONFIG.SPOTIFY_DBUS_CONTROLLER_SERVER" , json.dumps( config ) )
-			return config
+			try:
+				config_path = os.path.join( os.path.dirname( os.path.abspath( __file__ ) ) , "config.json" )
+				with open( config_path ) as f:
+					config = json.load( f )
+				redis_connection.set( "CONFIG.SPOTIFY_DBUS_CONTROLLER_SERVER" , json.dumps( config ) )
+				return config
+			except Exception as e:
+				config = {
+					"port": 11101 ,
+				}
+				redis_connection.set( "CONFIG.SPOTIFY_DBUS_CONTROLLER_SERVER" , json.dumps( config ) )
+				return config
 	except Exception as e:
-		print( "Could't Find Spotify DBus Controller Server Config in Redis or Local JSON File" )
+		print( "Could't Get Config for C2 Media Box Controller Server" )
 		print( e )
 		return False
 
