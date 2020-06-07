@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import dbus
+from pprint import pprint
 
 # sudo apt-get install d-feet
 # go over to 'Session Bus' Tab and look at org.mpris.MediaPlayer2.spotify
