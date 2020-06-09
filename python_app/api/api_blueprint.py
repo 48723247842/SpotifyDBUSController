@@ -4,7 +4,20 @@ from sanic import response
 
 import time
 import redis
+import redis_circular_list
 from SpotifyDBusController import SpotifyDBusController
+
+def redis_connect():
+	try:
+		redis_connection = redis.StrictRedis(
+			host="127.0.0.1" ,
+			port="6379" ,
+			db=1 ,
+			#password=ConfigDataBase.self[ 'redis' ][ 'password' ]
+			)
+		return redis_connection
+	except Exception as e:
+		return False
 
 def decode_spotify_uri_string( spotify_uri_string ):
 	decoded = spotify_uri_string.split( ":" )
@@ -73,7 +86,11 @@ def pause( request ):
 	result = { "message": "failed" , "status": None , "metadata": None }
 	try:
 		spotify_dbus_controller = SpotifyDBusController()
-		spotify_dbus_controller.pause()
+		current_status = spotify_dbus_controller.get_playback_status()
+		if current_status != "Paused":
+			spotify_dbus_controller.pause()
+		else:
+			spotify_dbus_controller.play()
 		time.sleep( .5 )
 		result["message"] = "success"
 		result["status"] = spotify_dbus_controller.get_playback_status()
@@ -134,7 +151,8 @@ def play_uri( request ):
 	try:
 		uri = request.args.get( "uri" )
 		if uri == None:
-			raise Exception( "no uri in request.args" )
+			redis = redis_connect()
+			uri = redis_circular_list.next( redis , "STATE.SPOTIFY.LIBRARY.PLAYLISTS.CURRATED" )
 		spotify_uri = decode_spotify_uri_string( uri )
 		print( spotify_uri )
 		spotify_dbus_controller = SpotifyDBusController()
