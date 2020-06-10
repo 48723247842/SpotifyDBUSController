@@ -124,6 +124,15 @@ class SpotifyDBusController:
 	def get_playback_status( self ):
 		return self.session_bus_property_interface.Get( self.session_bus_name , "PlaybackStatus" )
 
+	def get_common_status( self ):
+		return {
+			"status": self.get_playback_status().lower() ,
+			"volume": self.get_volume() ,
+			"current_time": self.get_position() ,
+			"metadata": self.get_metadata()
+		}
+
+
 	## Property Setters ??
 	## ===================
 	def set_shuffle_status( shuffle_status=False ):

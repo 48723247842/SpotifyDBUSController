@@ -50,6 +50,18 @@ def commands_root( request ):
 # 		result["error"] = str( e )
 # 	return json( result )
 
+@api_blueprint.route( "/status" , methods=[ "GET" ] )
+def status( request ):
+	result = { "message": "failed" , "status": None , "metadata": None }
+	try:
+		spotify_dbus_controller = SpotifyDBusController()
+		time.sleep( .5 )
+		result["status"] = spotify_dbus_controller.get_common_status()
+		result["message"] = "success"
+	except Exception as e:
+		print( e )
+		result["error"] = str( e )
+	return json( result )
 
 @api_blueprint.route( "/next" , methods=[ "GET" ] )
 def next( request ):
@@ -59,8 +71,7 @@ def next( request ):
 		spotify_dbus_controller.next()
 		time.sleep( .5 )
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -74,8 +85,7 @@ def previous( request ):
 		spotify_dbus_controller.previous()
 		time.sleep( .5 )
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -93,8 +103,7 @@ def pause( request ):
 			spotify_dbus_controller.play()
 		time.sleep( .5 )
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -108,8 +117,7 @@ def resume( request ):
 		spotify_dbus_controller.play()
 		time.sleep( .5 )
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -123,8 +131,7 @@ def play_pause( request ):
 		spotify_dbus_controller.play_pause()
 		time.sleep( .5 )
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -138,8 +145,7 @@ def stop( request ):
 		spotify_dbus_controller.stop()
 		time.sleep( .5 )
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -159,8 +165,7 @@ def play_uri( request ):
 		spotify_dbus_controller.open_uri( spotify_uri )
 		time.sleep( .5 )
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -174,8 +179,7 @@ def seek( request , seconds ):
 		spotify_dbus_controller.seek( seconds )
 		time.sleep( .5 )
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -195,9 +199,7 @@ def set_position( request ):
 		spotify_dbus_controller = SpotifyDBusController()
 		spotify_dbus_controller.set_position( track_id , position )
 		time.sleep( .5 )
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["message"] = "success"
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -211,8 +213,7 @@ def get_can_control( request ):
 		can_control = spotify_dbus_controller.get_can_control()
 		result["message"] = "success"
 		result["can_control"] = can_control
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -226,8 +227,7 @@ def get_can_go_next( request ):
 		can_go_next = spotify_dbus_controller.get_can_go_next()
 		result["message"] = "success"
 		result["can_go_next"] = can_go_next
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -241,8 +241,7 @@ def get_can_go_previous( request ):
 		can_go_previous = spotify_dbus_controller.get_can_go_previous()
 		result["message"] = "success"
 		result["can_go_previous"] = can_go_previous
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -256,8 +255,7 @@ def get_can_pause( request ):
 		can_pause = spotify_dbus_controller.get_can_pause()
 		result["message"] = "success"
 		result["can_pause"] = can_pause
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -271,8 +269,7 @@ def get_can_play( request ):
 		can_play = spotify_dbus_controller.get_can_play()
 		result["message"] = "success"
 		result["can_play"] = can_play
-		result["status"] = spotify_dbus_controller.get_shuffle_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -286,8 +283,7 @@ def get_can_seek( request ):
 		can_seek = spotify_dbus_controller.get_can_seek()
 		result["message"] = "success"
 		result["can_seek"] = can_seek
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -301,8 +297,7 @@ def get_shuffle_status( request ):
 		shuffle_status = spotify_dbus_controller.get_shuffle_status()
 		result["message"] = "success"
 		result["shuffle_status"] = shuffle_status
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -316,8 +311,7 @@ def get_metadata( request ):
 		metadata = spotify_dbus_controller.get_metadata()
 		result["message"] = "success"
 		result["metadata"] = metadata
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -331,8 +325,7 @@ def get_maximum_rate( request ):
 		maximum_rate = spotify_dbus_controller.get_maximum_rate()
 		result["message"] = "success"
 		result["maximum_rate"] = maximum_rate
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -346,8 +339,7 @@ def get_maximum_rate( request ):
 		minimum_rate = spotify_dbus_controller.get_minimum_rate()
 		result["message"] = "success"
 		result["minimum_rate"] = minimum_rate
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -361,8 +353,7 @@ def get_rate( request ):
 		rate = spotify_dbus_controller.get_rate()
 		result["message"] = "success"
 		result["rate"] = rate
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -376,8 +367,7 @@ def get_volume( request ):
 		volume = spotify_dbus_controller.get_volume()
 		result["message"] = "success"
 		result["volume"] = volume
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -391,8 +381,7 @@ def get_position( request ):
 		position = spotify_dbus_controller.get_position()
 		result["message"] = "success"
 		result["position"] = position
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -406,8 +395,7 @@ def get_loop_status( request ):
 		loop_status = spotify_dbus_controller.get_loop_status()
 		result["message"] = "success"
 		result["loop_status"] = loop_status
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
@@ -419,8 +407,7 @@ def get_playback_status( request ):
 	try:
 		spotify_dbus_controller = SpotifyDBusController()
 		result["message"] = "success"
-		result["status"] = spotify_dbus_controller.get_playback_status()
-		result["metadata"] = spotify_dbus_controller.get_metadata()
+		result["status"] = spotify_dbus_controller.get_common_status()
 	except Exception as e:
 		print( e )
 		result["error"] = str( e )
